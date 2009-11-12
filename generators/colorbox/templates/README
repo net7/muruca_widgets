@@ -1,0 +1,10 @@
+
+== This plugin enables support for colorbox, a jquery-based lightbox clone.
+
+To use the basic functionality, just include the jquery javascript library
+and render the 'shared/colorbox' partial in your 
+HTML <head>. You can then use the css classes 'cbox_image' and 'cbox_inline' to open
+single elements in the colorbox. 
+
+For more advanced functionality, you may edit the colorbox partial template file
+

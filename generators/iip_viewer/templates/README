@@ -1,0 +1,8 @@
+
+== Iip Flash viewer
+
+The IIP viewer contains just two helpers: Use the #iip_include_tags in your 
+HTML <head> section to load all the necessary javascript and the use the
+#iip_flash_viewer helper to insert the viewer for an IIP data record.
+
+These helper will only work with the Talia core framework installed.
