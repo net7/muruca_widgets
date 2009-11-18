@@ -1,0 +1,8 @@
+
+== Simile Timeline
+
+To include a simile timeline, include the jquery framework into your page
+and use the #timeline_includes helper in your html <head>
+
+You may then use the #timeline helper in you templates to include a 
+Simile timeline.

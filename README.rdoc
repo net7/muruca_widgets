@@ -1,0 +1,4 @@
+= Muruca Widgets
+
+Some widgets that can be used with Talia and other Muruca
+components. See the help for the Rails generators for more.

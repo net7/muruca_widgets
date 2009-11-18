@@ -50,7 +50,7 @@ class TimelineSource
   #
   # [*final_year*] - Last year of the timeline. See :start_year
   def initialize(options)
-    @events = {}
+    @events = []
     @options = process_options(options)
     
     if(@options[:sources])
@@ -66,11 +66,11 @@ class TimelineSource
   end
   
   def first_year
-    @first_year.to_s || '1900'
+    (@first_year || '1900').to_i
   end
   
   def last_year
-    @last_year.to_s || '2000'
+    (@last_year || '2000').to_i
   end
   
   def timeline_data
@@ -78,6 +78,12 @@ class TimelineSource
       :dateTimeFormat => 'iso8601',
       :events => @events
     }.to_json
+  end
+  
+  # Get the iso8601 string for the date
+  def self.to_iso8601(date)
+    return nil unless(date)
+    date.strftime('%Y-%m-%dT%H:%M:%SZ')
   end
   
   private
@@ -159,7 +165,7 @@ class TimelineSource
       new_event[:description] = src[@options[:description_property]].first || new_event[:title]
       # new_event['image'] = ''
       # The link field may either be filled from a property, or with a link to the element itself (default)
-      new_event[:link] = if(l@options[:link_property])
+      new_event[:link] = if(@options[:link_property])
           src[@options[:link_property]].first || ''
         else
           (N::LOCAL + N::URI.new(src.uri).local_name).to_s
@@ -170,6 +176,8 @@ class TimelineSource
       # Colors as defined in the options
       new_event[:color] = @options[:color]
       new_event[:textColor] = @options[:text_color]
+      
+      new_event.delete(:end) unless(new_event[:end])
       @events << new_event
     end
   end
@@ -195,12 +203,9 @@ class TimelineSource
     result
   end
   
-  # Get the iso8601 string for the date
   def to_iso8601(date)
-    return nil unless(date)
-    date.strftime('%Y-%m-%dT%H:%M:%SZ')
+    TimelineSource.to_iso8601(date)
   end
-  
   
   
 end

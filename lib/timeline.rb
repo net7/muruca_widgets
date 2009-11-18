@@ -1,4 +1,5 @@
 require 'json'
+require 'timeline_source'
 
 # Contains all the data and settings for a single Simile timeline
 class Timeline
@@ -24,10 +25,10 @@ class Timeline
     end
     
     @config = options[:config].to_options 
+    @config[:startDate] ||= year_to_iso8601(@data.first_year) if(@data.first_year)
+    @config[:stopDate] ||= year_to_iso8601(@data.last_year) if(@data.last_year)
+    @default_date ||= year_to_iso8601(@data.first_year + ((@data.last_year - @data.first_year) / 2)) if(@data.first_year && @data.last_year)
     @config[:bands] ||= default_band
-    @config[:startDate] ||= @data.first_year if(@data.first_year)
-    @config[:stopDate] ||= @data.last_year if(@data.last_year)
-    @config[:date] ||= (@data.first_year + ((@data.last_year - @data.first_year) / 2)) if(@data.first_year && @data.last_year)
   end
   
   def timeline_config
@@ -40,12 +41,21 @@ class Timeline
   
   private
   
+  def year_to_iso8601(year)
+    year = year.to_i
+    to_iso8601(Date.ordinal(year))
+  end
+  
+  def to_iso8601(date)
+    TimelineSource.to_iso8601(date)
+  end
+  
   def default_band
     [{
         :width => 70,
         :intervalUnit => 'DECADE',
         :intervalPixels => 100,
-        :date => '1900',
+        :date => @default_date || '1900-01-01',
         :layout => 'original'
       }]
   end

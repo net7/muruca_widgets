@@ -13,6 +13,7 @@ class ColorboxGenerator < Rails::Generator::Base
       m.file '_colorbox.html.erb', 'app/views/shared/_colorbox.html.erb'
       m.directory 'public/javascripts'
       m.file 'jquery-1.3.2.min.js', 'public/javascripts/jquery-1.3.2.min.js'
+      m.file 'jquery.colorbox.js', 'public/javascripts/jquery.colorbox.js'
       m.readme 'README'
     end
   end

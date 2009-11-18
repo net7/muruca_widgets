@@ -14,8 +14,9 @@ class SimileTimelineGenerator < Rails::Generator::Base
       m.file 'timeline.js', 'public/javascripts/timeline.js'
       m.directory 'app/views/shared'
       m.file '_timeline.html.erb', 'app/views/shared/_timeline.html.erb'
+      m.file '_timeline_include.html.erb', 'app/views/shared/_timeline_include.html.erb'
       m.directory 'app/helpers'
-      m.file 'timeline_heper.rb', 'app/helpers/timeline_helper.rb'
+      m.file 'timeline_helper.rb', 'app/helpers/timeline_helper.rb'
       m.readme 'README'
     end
   end

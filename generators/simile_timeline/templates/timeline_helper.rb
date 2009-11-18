@@ -1,10 +1,10 @@
+require 'timeline'
+
 module TimelineHelper
   
   # Include the javscript for the simile timeline
   def timeline_includes
-    result = javascript_include_tag('timeline_js/timeline-api')
-    result << javascript_include_tag('timeline.js')
-    result
+    render :partial => 'shared/timeline_include'
   end
   
   # Create a new timeline. Example:
