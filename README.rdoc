@@ -2,3 +2,11 @@
 
 Some widgets that can be used with Talia and other Muruca
 components. See the help for the Rails generators for more.
+
+== Installation
+
+Just go 'gem install muruca_widgets'. Then go into your rails
+application and say 'script/generate', which will show you 
+the generators that are installed through this plugin. Use
+the generator for the widget you need - it will give you some
+further instructions once it ran through.
