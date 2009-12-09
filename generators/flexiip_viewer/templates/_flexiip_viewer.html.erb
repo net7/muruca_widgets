@@ -1,0 +1,20 @@
+<%- content_tag :div, options do %>
+
+<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+		id="MainApp" width="100%" height="100%"
+		codebase="http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab">
+		<param name="movie" value="MainApp.swf?title=<%= title %>&image_path=<%= image_path %>&iips=<%= TaliaCore::DataTypes::IipData.iip_server_uri %>" />
+		<param name="quality" value="high" />
+		<param name="bgcolor" value="#869ca7" />
+		<param name="allowScriptAccess" value="sameDomain" />
+		<embed src="flexiip.swf?title=<%= title %>&image_path=<%= image_path %>&iips=<%= TaliaCore::DataTypes::IipData.iip_server_uri %>" quality="high" bgcolor="#869ca7"
+			width="100%" height="100%" name="MainApp" align="middle"
+			play="true"
+			loop="false"
+			quality="high"
+			allowScriptAccess="sameDomain"
+			type="application/x-shockwave-flash"
+			pluginspage="http://www.adobe.com/go/getflashplayer">
+		</embed>
+</object>
+<% end -%>

@@ -35,6 +35,10 @@ class Timeline
     @config.to_json
   end
   
+  def empty?
+    @data.empty?
+  end
+  
   def timeline_data
     @data.timeline_data
   end

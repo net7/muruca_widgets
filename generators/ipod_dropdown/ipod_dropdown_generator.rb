@@ -17,6 +17,7 @@ class IpodDropdownGenerator < Rails::Generator::Base
       files_in(m, 'ipod-menu', 'public/stylesheets/')
       m.file 'fg.menu.js', 'public/javascripts/fg.menu.js'
       m.file 'jquery-1.3.2.min.js', 'public/javascripts/jquery-1.3.2.min.js'
+      m.file 'ipod_menu.js', 'public/javascripts/ipod_menu.js'
       m.readme 'README'
     end
   end

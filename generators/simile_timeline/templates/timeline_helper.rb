@@ -23,13 +23,19 @@ module TimelineHelper
   #   }],
   #   data => { ...timeline data... } 
   # )
+  #
+  # You can set the :only_with_data option if you want no timeline for an
+  # empty dataset
   def timeline(timeline_element, options)
     raise(ArgumentError, 'Must pass an option hash here') unless(options.is_a?(Hash))
     options.to_options!
     
+    only_data = options.delete(:only_with_data)
+    
     data = options.delete(:data)
     options[:timelineElement] = timeline_element
     timeline = Timeline.new(:config => options, :data => data)
+    return '' if(timeline.empty? && only_data)
     render(:partial => 'shared/timeline', :object => timeline, :locals => { :element_id => timeline_element })
   end
   

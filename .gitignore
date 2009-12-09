@@ -1,2 +1,4 @@
 .gh_pages
 rdoc
+/pkg
+/*.gemspec

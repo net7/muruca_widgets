@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+	<iipserver type="string"><![CDATA[http://merovingio.c2rmf.cnrs.fr/fcgi-bin/iipsrv.fcgi]]></iipserver>
+	<min_scale type="number">0.01</min_scale>
+	<max_scale type="number">1.5</max_scale>
+	<scale_step type="number">0.05</scale_step>
+	<rotate_step type="number">1</rotate_step>
+	<zoom_anim_duration type="number">0.4</zoom_anim_duration>
+	<rotate_anim_duration type="number">0.4</rotate_anim_duration>
+	<move_anim_duration type="number">0.1</move_anim_duration>
+	<help_text type="string"><![CDATA[<b><font size="14">Information about the image</font></b><br /><b>Image title:</b><*>image_title</*><br /><b>Pyramid level:</b><*>resolution_number</*><br /><b>Image size:</b><*>image_size</*><br /><b>Tile size:</b><*>tile_size</*><br /><br />Other help text, html formatted]]></help_text>
+</settings>

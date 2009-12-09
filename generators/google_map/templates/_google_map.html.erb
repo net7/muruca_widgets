@@ -1,0 +1,6 @@
+<%  javascript_tag do %>
+  $(document).ready(function() {
+	generateGmap(<%= latitude %>, <%= longitude %>, "<%= html_options['id'] %>", <%= map_options.to_json %> );
+  });
+<% end %>
+<%= content_tag('div', '', html_options) %>

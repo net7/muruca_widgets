@@ -1,0 +1,4 @@
+
+To use a google map in your page, just call the #gmap_includes helper in your HTML <head> section and include the jquery library. Then use the gmap helper to create the map element. 
+
+The map will be in a div with the id passed to the helper, you can add CSS rules for that element in your stylesheets to style it.

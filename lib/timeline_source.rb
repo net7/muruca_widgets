@@ -86,6 +86,10 @@ class TimelineSource
     date.strftime('%Y-%m-%dT%H:%M:%SZ')
   end
   
+  def empty?
+    @events.empty?
+  end
+  
   private
   
   # Check the options and set them to the default values if necessary
@@ -93,7 +97,7 @@ class TimelineSource
     options.to_options!
     options[:dateTimeFormat] ||= 'iso8601'
     # Check if we have one data source option given
-    exactly_one_source = options[:sources] ^ options[:source_finder] ^ options[:raw_data]
+    exactly_one_source = (options[:sources] != nil) ^ (options[:source_finder] != nil) ^ (options[:raw_data] != nil)
     # We could also all three options given - there should be at least one false, d'oh
     exactly_one_source = (exactly_one_source && (!options[:sources] || !options[:source_finder]))
     raise(ArgumentError, "Must give exactly one of :raw_data, :sources or :source_finder") unless(exactly_one_source)
@@ -168,7 +172,11 @@ class TimelineSource
       new_event[:link] = if(@options[:link_property])
           src[@options[:link_property]].first || ''
         else
-          (N::LOCAL + N::URI.new(src.uri).local_name).to_s
+          if((uri = src.to_uri).local?)
+            '/' << uri.local_name
+          else
+            uri.to_s
+          end
         end
       # We have a duration event if we have a non-nil end date
       new_event[:duration_event] = true unless(new_event[:end])

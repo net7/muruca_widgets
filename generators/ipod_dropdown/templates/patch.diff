@@ -1,0 +1,95 @@
+--- fg.menu.js.orig
++++ fg.menu.js
+@@ -244,8 +244,8 @@ function Menu(caller, options){
+this.chooseItem = function(item){
+menu.kill();
+// edit this for your own custom function/callback:
+- $('#menuSelection').text($(item).text());
+- // location.href = $(item).attr('href');
++ // $('#menuSelection').text($(item).text());
++ location.href = $(item).attr('href');
+};
+};
+
+@@ -268,7 +268,12 @@ Menu.prototype.flyout = function(container, options) {
+function(){
+clearTimeout(hideTimer);
+var subList = $(this).next();
+- if (!fitVertical(subList, $(this).offset().top)) { subList.css({ top: 'auto', bottom: 0 }); };
++ if (!fitVertical(subList,
++ $(this).offset().top))
++ {
++ subList.css({
++ top: 0, bottom: 'auto' });
++ };
+if (!fitHorizontal(subList, $(this).offset().left + 100)) { subList.css({ left: 'auto', right: linkWidth, 'z-index': 999 }); };
+showTimer = setTimeout(function(){
+subList.addClass('ui-widget-content').show(options.showSpeed).attr('aria-expanded', 'true');
+@@ -322,13 +327,25 @@ Menu.prototype.drilldown = function(container, options) {
+if (options.backLink) { breadcrumb.addClass('fg-menu-footer').appendTo(container).hide(); }
+else { breadcrumb.addClass('fg-menu-header').prependTo(container); };
+breadcrumb.append(crumbDefaultHeader);
+-
+- var checkMenuHeight = function(el){
+- if (el.height() > options.maxHeight) { el.addClass('fg-menu-scroll') };
+- el.css({ height: options.maxHeight });
++
++ var checkMenuHeight = function(el) {
++ var max_height = options.maxHeight - breadcrumb.getTotalHeight();
++ if (el.height() > max_height) {
++ el.addClass('fg-menu-scroll');
++ el.height(max_height);
++ topList.height(max_height);
++ }
++ else {
++ if (topList.height() < el.height()) {
++ topList.height(el.height());
++ }
++ }
+};
+
+- var resetChildMenu = function(el){ el.removeClass('fg-menu-scroll').removeClass('fg-menu-current').height('auto'); };
++ var resetChildMenu = function(el) {
++ el.removeClass('fg-menu-scroll').removeClass('fg-menu-current').height('auto');
++ topList.height('auto');
++ };
+
+this.resetDrilldownMenu = function(){
+$('.fg-menu-current').removeClass('fg-menu-current');
+@@ -369,9 +386,8 @@ Menu.prototype.drilldown = function(container, options) {
+
+// show next menu
+resetChildMenu(parentUl);
+- checkMenuHeight(nextList);
+topList.animate({ left: nextLeftVal }, options.crossSpeed);
+- nextList.show().addClass('fg-menu-current').attr('aria-expanded', 'true');
++ nextList.show().addClass('fg-menu-current').attr('aria-expanded', 'true');
+
+var setPrevMenu = function(backlink){
+var b = backlink;
+@@ -379,12 +395,13 @@ Menu.prototype.drilldown = function(container, options) {
+var prevList = c.parents('ul:eq(0)');
+c.hide().attr('aria-expanded', 'false');
+resetChildMenu(c);
+- checkMenuHeight(prevList);
+prevList.addClass('fg-menu-current').attr('aria-expanded', 'true');
+if (prevList.hasClass('fg-menu-content')) { b.remove(); footer.hide(); };
++ checkMenuHeight(prevList);
+};
+
+// initialize “back” link
++ breadcrumb.empty().append(crumbDefaultHeader);
+if (options.backLink) {
+if (footer.find('a').size() == 0) {
+footer.show();
+@@ -432,7 +449,8 @@ Menu.prototype.drilldown = function(container, options) {
+});
+newCrumb.prev().append(' <span class="ui-icon '+options.nextCrumbLink+'"></span>');
+};
+- return false;
++ checkMenuHeight(nextList);
++ return false;
+});
+}
+// if the link is a leaf node (doesn't open a child menu)
+</pre>

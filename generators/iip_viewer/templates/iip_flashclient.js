@@ -19,6 +19,6 @@ function load_iip_flashclient(server, image_path, width, height, element_id) {
     so.addVariable("imgSrc", image_path);
     so.addVariable("zoomSteps", "3");
     so.addVariable("imgSrv", server);
-    so.write(element_id);		
+    so.write(element_id);
 }
 

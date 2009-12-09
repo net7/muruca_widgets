@@ -13,9 +13,9 @@ module IipHelper
   def iip_flash_viewer(iip_data, height = 400, width = 400, klass='iipviewer')
     raise(ArgumentError, 'Must pass an iip data object here') unless(iip_data.is_a?(TaliaCore::DataTypes::IipData))
     render :partial => 'shared/iip_flash_viewer', :locals => {
-      :image_path => iip_data.get_iip_root_file_path,
-      :height => height.to_s,
-      :width => width.to_s,
+      :image_path => h(iip_data.get_iip_root_file_path),
+      :height => h(height.to_s),
+      :width => h(width.to_s),
       :element_id => "iip_viewer_#{rand 10E16}", # Random name so that multiple instances can be used
       :div_class => klass
     }
