@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Timeline</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Timeline</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/lib/timeline_rb.html">
+                lib/timeline.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+Contains all the data and settings for a single Simile timeline
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000003">empty?</a>&nbsp;&nbsp;
+      <a href="#M000001">new</a>&nbsp;&nbsp;
+      <a href="#M000002">timeline_config</a>&nbsp;&nbsp;
+      <a href="#M000004">timeline_data</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000001" class="method-detail">
+        <a name="M000001"></a>
+
+        <div class="method-heading">
+          <a href="#M000001" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+The main options that can be given to the timeline are
+</p>
+<dl>
+<dt><b>config</b></dt><dd>- The configuration for timeline, including the bands configuration.
+
+<pre>
+  This will be directly passed on to timline.js, see there for more
+  documentation. If no :bands option is given, a default band
+  is created for the timeline.
+</pre>
+</dd>
+<dt><b>data</b></dt><dd>- A <a href="TimelineSource.html">TimelineSource</a> object containing the
+data for this timeline OR a
+
+<pre>
+  hash with the options to create the TimelineSource
+</pre>
+</dd>
+</dl>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000001-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000001-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/timeline.rb, line 15</span>
+15:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">options</span>)
+16:     <span class="ruby-identifier">raise</span>(<span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">'Expecting an option hash here.'</span>) <span class="ruby-keyword kw">unless</span>(<span class="ruby-identifier">options</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>))
+17:     <span class="ruby-identifier">options</span>.<span class="ruby-identifier">to_options!</span>
+18:     <span class="ruby-identifier">raise</span>(<span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">'Expecting some data here'</span>) <span class="ruby-keyword kw">unless</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:data</span>])
+19:     <span class="ruby-identifier">raise</span>(<span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">'Expecting the configuration here'</span>) <span class="ruby-keyword kw">unless</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:config</span>])
+20:     
+21:     <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:data</span>].<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">TimelineSource</span>))
+22:       <span class="ruby-ivar">@data</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:data</span>]
+23:     <span class="ruby-keyword kw">else</span>
+24:       <span class="ruby-ivar">@data</span> = <span class="ruby-constant">TimelineSource</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:data</span>])
+25:     <span class="ruby-keyword kw">end</span>
+26:     
+27:     <span class="ruby-ivar">@config</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:config</span>].<span class="ruby-identifier">to_options</span> 
+28:     <span class="ruby-ivar">@config</span>[<span class="ruby-identifier">:startDate</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">year_to_iso8601</span>(<span class="ruby-ivar">@data</span>.<span class="ruby-identifier">first_year</span>) <span class="ruby-keyword kw">if</span>(<span class="ruby-ivar">@data</span>.<span class="ruby-identifier">first_year</span>)
+29:     <span class="ruby-ivar">@config</span>[<span class="ruby-identifier">:stopDate</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">year_to_iso8601</span>(<span class="ruby-ivar">@data</span>.<span class="ruby-identifier">last_year</span>) <span class="ruby-keyword kw">if</span>(<span class="ruby-ivar">@data</span>.<span class="ruby-identifier">last_year</span>)
+30:     <span class="ruby-ivar">@default_date</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">year_to_iso8601</span>(<span class="ruby-ivar">@data</span>.<span class="ruby-identifier">first_year</span> <span class="ruby-operator">+</span> ((<span class="ruby-ivar">@data</span>.<span class="ruby-identifier">last_year</span> <span class="ruby-operator">-</span> <span class="ruby-ivar">@data</span>.<span class="ruby-identifier">first_year</span>) <span class="ruby-operator">/</span> <span class="ruby-value">2</span>)) <span class="ruby-keyword kw">if</span>(<span class="ruby-ivar">@data</span>.<span class="ruby-identifier">first_year</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@data</span>.<span class="ruby-identifier">last_year</span>)
+31:     <span class="ruby-ivar">@config</span>[<span class="ruby-identifier">:bands</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">default_band</span>
+32:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000003" class="method-detail">
+        <a name="M000003"></a>
+
+        <div class="method-heading">
+          <a href="#M000003" class="method-signature">
+          <span class="method-name">empty?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000003-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000003-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/timeline.rb, line 38</span>
+38:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">empty?</span>
+39:     <span class="ruby-ivar">@data</span>.<span class="ruby-identifier">empty?</span>
+40:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000002" class="method-detail">
+        <a name="M000002"></a>
+
+        <div class="method-heading">
+          <a href="#M000002" class="method-signature">
+          <span class="method-name">timeline_config</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000002-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000002-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/timeline.rb, line 34</span>
+34:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">timeline_config</span>
+35:     <span class="ruby-ivar">@config</span>.<span class="ruby-identifier">to_json</span>
+36:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000004" class="method-detail">
+        <a name="M000004"></a>
+
+        <div class="method-heading">
+          <a href="#M000004" class="method-signature">
+          <span class="method-name">timeline_data</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000004-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000004-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/timeline.rb, line 42</span>
+42:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">timeline_data</span>
+43:     <span class="ruby-ivar">@data</span>.<span class="ruby-identifier">timeline_data</span>
+44:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
