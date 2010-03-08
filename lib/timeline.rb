@@ -6,12 +6,12 @@ class Timeline
   
   # The main options that can be given to the timeline are 
   #
-  # [*config*] - The configuration for timeline, including the bands configuration.
-  #              This will be directly passed on to timline.js, see there for more
-  #              documentation. If no :bands option is given, a default band
-  #              is created for the timeline.
-  # [*data*] - A TimelineSource object containing the data for this timeline OR a 
-  #            hash with the options to create the TimelineSource
+  # [*config*] The configuration for timeline, including the bands configuration.
+  #            This will be directly passed on to timline.js, see there for more
+  #            documentation. If no :bands option is given, a default band
+  #            is created for the timeline.
+  # [*data*] A TimelineSource object containing the data for this timeline OR a 
+  #          hash with the options to create the TimelineSource
   def initialize(options)
     raise(ArgumentError, 'Expecting an option hash here.') unless(options.is_a?(Hash))
     options.to_options!

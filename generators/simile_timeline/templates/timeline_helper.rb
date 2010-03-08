@@ -8,21 +8,21 @@ module TimelineHelper
   end
   
   # Create a new timeline. Example:
-  # timeline('tl',
-  #   theme => 'ClassicTheme'
-  #   startDate => '1900-01-01'
-  #   stopDate => '2000-01-01'
-  #   url => '.'
-  #   bands => [{
-  #     intervalUnit => 'DECADE',
-  #     intervalPixels => 100,
-  #     date => '1900-01-01',
-  #     layout => 'original'
-  #     # syncWith => 0,
-  #     # highlight => true
-  #   }],
-  #   data => { ...timeline data... } 
-  # )
+  #  timeline('tl',
+  #    theme => 'ClassicTheme'
+  #    startDate => '1900-01-01'
+  #    stopDate => '2000-01-01'
+  #    url => '.'
+  #    bands => [{
+  #      intervalUnit => 'DECADE',
+  #      intervalPixels => 100,
+  #      date => '1900-01-01',
+  #      layout => 'original'
+  #      # syncWith => 0,
+  #      # highlight => true
+  #    }],
+  #    data => { ...timeline data... } 
+  #  )
   #
   # You can set the :only_with_data option if you want no timeline for an
   # empty dataset

@@ -19,7 +19,7 @@ Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.title    = 'MurucaWidgets'
   rdoc.options << '--line-numbers' << '--inline-source'
   rdoc.rdoc_files.include('README.rdoc')
-  rdoc.rdoc_files.include('lib/**/*.rb')
+  rdoc.rdoc_files.include('lib/**/*.rb', 'generators/**/templates/**/*.rb')
 end
 
 begin
@@ -43,6 +43,7 @@ begin
   require 'gokdok'
   Gokdok::Dokker.new do |gd|
     gd.remote_path = '' # Put into the root directory
+    gd.doc_home = 'rdoc'
   end
 rescue LoadError
   puts "Gokdok is not available. Install with: gem install gokdok"

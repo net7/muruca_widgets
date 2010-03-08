@@ -7,48 +7,48 @@ class TimelineSource
   # Create a new timeline source. There are several ways to fill this with data:
   #
   # [*raw_data*] The most straightforward method is to pass the :raw_data option which 
-  #   must contain an array containing each 
-  #   event on the timeline as a hash. Each event must at least contain the
-  #   :start (start date), :title (Event title). Other than that, all,
-  #   options that are valid for the simile timeline events will be accepted.
+  #              must contain an array containing each 
+  #              event on the timeline as a hash. Each event must at least contain the
+  #              :start (start date), :title (Event title). Other than that, all,
+  #              options that are valid for the simile timeline events will be accepted.
   #
   # [*sources*] The :sources option must contain a list of ActiveSource objects. 
-  #   By default this will try to take the dcns:date property from all objects.
+  #             By default this will try to take the dcns:date property from all objects.
   #
   # [*source_finder*] Alternatively, you may pass the :source_finder option. This option should
-  #   contain a hash that will be passed into ActiveSource.find(:all)
+  #                   contain a hash that will be passed into ActiveSource.find(:all)
   #
   # Other options that can be used to configure the working of the timeline
   # data source are:
   #
-  # [*start_property*] - Only valid with the :sources or :source_finder option. 
-  #                      The class will try to retrieve the start date from this property. If an
-  #                      ISO 8601 duration is found in the field a duration event is created (unless
-  #                      an :end_property had been explicitly set). [default: dcns:date]
+  # [*start_property*] Only valid with the :sources or :source_finder option. 
+  #                    The class will try to retrieve the start date from this property. If an
+  #                    ISO 8601 duration is found in the field a duration event is created (unless
+  #                    an :end_property had been explicitly set). [default: dcns:date]
   #
-  # [*end_property*] - Take the end date of each event from this property. This will disable the
-  #                    automatic handling of ISO 8601 durations (see :start_property)
+  # [*end_property*] Take the end date of each event from this property. This will disable the
+  #                  automatic handling of ISO 8601 durations (see :start_property)
   # 
-  # [*title_property*] - Take the event title from this property. If the title is not found, the
-  #                      system will try the dcns:label property and if that fails use the
-  #                      local part of the source URL. This is only valid with the :sources or
-  #                      :source_finder options. [default: dcns:title]
+  # [*title_property*] Take the event title from this property. If the title is not found, the
+  #                    system will try the dcns:label property and if that fails use the
+  #                    local part of the source URL. This is only valid with the :sources or
+  #                    :source_finder options. [default: dcns:title]
   #
-  # [*description_property*] - Take the description of the event from this field. If not found,
-  #                            the title value is used. This is only valid with the :sources or
-  #                            :source_finder options. [default: dcns:abstract]
+  # [*description_property*] Take the description of the event from this field. If not found,
+  #                          the title value is used. This is only valid with the :sources or
+  #                          :source_finder options. [default: dcns:abstract]
   #
-  # [*link_property*] - Property to take the link from. By default a link to the element's own URL is created.
-  #            This is only valid with the :sources or :source_finder options. 
+  # [*link_property*] Property to take the link from. By default a link to the element's own URL is created.
+  #                   This is only valid with the :sources or :source_finder options. 
   #
-  # [*color*] - Default color entry for the events. [default: 'blue']
+  # [*color*] Default color entry for the events. [default: 'blue']
   #
-  # [*text_color] - Default text color for the events [default: 'black']
+  # [*text_color*] Default text color for the events [default: 'black']
   #
-  # [*start_year*] - Year that the timeline starts in. If not given, this will automatically be
-  #                  calculated from the dataset
+  # [*start_year*] Year that the timeline starts in. If not given, this will automatically be
+  #                calculated from the dataset
   #
-  # [*final_year*] - Last year of the timeline. See :start_year
+  # [*final_year*] Last year of the timeline. See :start_year
   def initialize(options)
     @events = []
     @options = process_options(options)

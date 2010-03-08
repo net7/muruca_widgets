@@ -44,8 +44,8 @@ function TimelineRunner(params, tl_data) {
 				new_band.date = Timeline.DateTime.parseIso8601DateTime(bands[band].date || '1900-01-01');
 				new_band.theme = this.theme;
 				new_band.layout = (bands[band].layout || 'original');
-				if(band.syncWith) { new_band.syncWith = bands[band].syncWith; }
-				if(band.highlight) { new_band.highlight = bands[band].highlight; }
+				if(bands[band].syncWith) { new_band.syncWith = bands[band].syncWith; }
+				if(bands[band].highlight) { new_band.highlight = bands[band].highlight; }
 				this.bands.push(Timeline.createBandInfo(new_band));
 			}
 			return this.bands;
