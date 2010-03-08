@@ -134,89 +134,68 @@ Create a <a href="TimelineSource.html#M000005">new</a> timeline source.
 There are several ways to fill this with data:
 </p>
 <dl>
-<dt><b>raw_data</b></dt><dd>The most straightforward method is to pass the :raw_data option which
+<dt><b>raw_data</b></dt><dd>The most straightforward method is to pass the :raw_data option which must
+contain an array containing each event on the timeline as a hash. Each
+event must at least contain the
 
 </dd>
 </dl>
 <pre>
-  must contain an array containing each
-  event on the timeline as a hash. Each event must at least contain the
-  :start (start date), :title (Event title). Other than that, all,
-  options that are valid for the simile timeline events will be accepted.
+            :start (start date), :title (Event title). Other than that, all,
+            options that are valid for the simile timeline events will be accepted.
 </pre>
 <dl>
-<dt><b>sources</b></dt><dd>The :sources option must contain a list of ActiveSource objects.
+<dt><b>sources</b></dt><dd>The :sources option must contain a list of ActiveSource objects. By default
+this will try to take the dcns:date property from all objects.
 
 </dd>
-</dl>
-<pre>
-  By default this will try to take the dcns:date property from all objects.
-</pre>
-<dl>
 <dt><b>source_finder</b></dt><dd>Alternatively, you may pass the :source_finder option. This option should
+contain a hash that will be passed into ActiveSource.find(:all)
 
 </dd>
 </dl>
-<pre>
-  contain a hash that will be passed into ActiveSource.find(:all)
-</pre>
 <p>
 Other options that can be used to configure the working of the timeline
 data source are:
 </p>
 <dl>
-<dt><b>start_property</b></dt><dd>- Only valid with the :sources or :source_finder option.
-
-<pre>
-  The class will try to retrieve the start date from this property. If an
-  ISO 8601 duration is found in the field a duration event is created (unless
-  an :end_property had been explicitly set). [default: dcns:date]
-</pre>
-</dd>
-<dt><b>end_property</b></dt><dd>- Take the end date of each event from this property. This will disable the
-
-<pre>
-  automatic handling of ISO 8601 durations (see :start_property)
-</pre>
-</dd>
-<dt><b>title_property</b></dt><dd>- Take the event title from this property. If the title is not found, the
-
-<pre>
-  system will try the dcns:label property and if that fails use the
-  local part of the source URL. This is only valid with the :sources or
-  :source_finder options. [default: dcns:title]
-</pre>
-</dd>
-<dt><b>description_property</b></dt><dd>- Take the description of the event from this field. If not found,
-
-<pre>
-  the title value is used. This is only valid with the :sources or
-  :source_finder options. [default: dcns:abstract]
-</pre>
-</dd>
-<dt><b>link_property</b></dt><dd>- Property to take the link from. By default a link to the element&#8216;s
-own URL is created.
+<dt><b>start_property</b></dt><dd>Only valid with the :sources or :source_finder option. The class will try
+to retrieve the start date from this property. If an ISO 8601 duration is
+found in the field a duration event is created (unless an :end_property had
+been explicitly set). [default: dcns:date]
 
 </dd>
-</dl>
-<pre>
-           This is only valid with the :sources or :source_finder options.
-</pre>
-<dl>
-<dt><b>color</b></dt><dd>- Default color entry for the events. [default: &#8216;blue&#8217;]
+<dt><b>end_property</b></dt><dd>Take the end date of each event from this property. This will disable the
+automatic handling of ISO 8601 durations (see :start_property)
 
 </dd>
-<dt>*text_color</dt><dd>- Default text color for the events [default: &#8216;black&#8217;]
+<dt><b>title_property</b></dt><dd>Take the event title from this property. If the title is not found, the
+system will try the dcns:label property and if that fails use the local
+part of the source URL. This is only valid with the :sources or
+:source_finder options. [default: dcns:title]
 
 </dd>
-<dt><b>start_year</b></dt><dd>- Year that the timeline starts in. If not given, this will automatically
-be
+<dt><b>description_property</b></dt><dd>Take the description of the event from this field. If not found, the title
+value is used. This is only valid with the :sources or :source_finder
+options. [default: dcns:abstract]
 
-<pre>
-  calculated from the dataset
-</pre>
 </dd>
-<dt><b>final_year</b></dt><dd>- Last year of the timeline. See :start_year
+<dt><b>link_property</b></dt><dd>Property to take the link from. By default a link to the element&#8216;s
+own URL is created. This is only valid with the :sources or :source_finder
+options.
+
+</dd>
+<dt><b>color</b></dt><dd>Default color entry for the events. [default: &#8216;blue&#8217;]
+
+</dd>
+<dt><b>text_color</b></dt><dd>Default text color for the events [default: &#8216;black&#8217;]
+
+</dd>
+<dt><b>start_year</b></dt><dd>Year that the timeline starts in. If not given, this will automatically be
+calculated from the dataset
+
+</dd>
+<dt><b>final_year</b></dt><dd>Last year of the timeline. See :start_year
 
 </dd>
 </dl>
