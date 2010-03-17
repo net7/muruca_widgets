@@ -112,8 +112,8 @@ class TimelineSource
       options[:description_property] ||= N::DCNS.abstract
     end
     # More defaults
-    options[:color] = 'blue'
-    options[:text_color] = 'black'
+    options[:color] ||= 'blue'
+    options[:text_color] ||= 'black'
     options
   end
   
