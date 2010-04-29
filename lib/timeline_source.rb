@@ -123,7 +123,7 @@ class TimelineSource
     data.each do |data_item|
       raise(ArgumentError, "Illegal element in data #{data_item.inspect}") unless(data.is_a?(Hash))
       data_item.to_options!
-      raise(ArgumetnError, "Incomplete data element #{data_item.inspect}") unless(data_item[:start] && data_item[:title])
+      raise(ArgumentError, "Incomplete data element #{data_item.inspect}") unless(data_item[:start] && data_item[:title])
       # Fill the start and end dates with a normlized iso8106 version of the existing date(s)
       start_date, end_date = process_timestamp(data_item[:start])
       end_date = process_timestamp(data_item[:end]).first if(data_item[:end])
@@ -143,8 +143,8 @@ class TimelineSource
   def initialize_from_sources(sources)
     sources = [sources] unless(sources.is_a?(Array))
     
-    start_predicate = @options[:start_property]
-    end_predicate = @options[:end_property]
+    original_start_predicate = @options[:start_property]
+    original_end_predicate = @options[:end_property]
     
     
     first_year = nil
@@ -152,6 +152,12 @@ class TimelineSource
 
     # Cycle through the sources
     sources.each do |src|
+
+      # We may accept an array of possible predicates indicating the dates
+      # we try to find out the one in use in this particular source here
+      start_predicate = date_predicate_from_array(original_start_predicate, src)
+      end_predicate = date_predicate_from_array(original_end_predicate, src)
+
       # Ignore all sources that do not have a timestamp
       next if((stamp = src[start_predicate].first).blank?)
       new_event = {}
@@ -159,7 +165,7 @@ class TimelineSource
       # Fill the start and end date fields
       dates = process_timestamp(stamp)
       # Overwrite the second date if we have a predefined "end" field
-      dates[1] = process_timestamp(src[end_predicate]).first if(end_predicate)
+      dates[1] = process_timestamp(src[end_predicate].first).first if(end_predicate) and !src[end_predicate].empty?
       new_event[:start], new_event[:end] = dates.collect { |d| to_iso8601(d) }
 
       update_first_last_year(dates)
@@ -170,14 +176,14 @@ class TimelineSource
       # new_event['image'] = ''
       # The link field may either be filled from a property, or with a link to the element itself (default)
       new_event[:link] = if(@options[:link_property])
-          src[@options[:link_property]].first || ''
+        src[@options[:link_property]].first || ''
+      else
+        if((uri = src.to_uri).local?)
+          '/' << uri.local_name
         else
-          if((uri = src.to_uri).local?)
-            '/' << uri.local_name
-          else
-            uri.to_s
-          end
+          uri.to_s
         end
+      end
       # We have a duration event if we have a non-nil end date
       new_event[:duration_event] = true unless(new_event[:end])
       # new_event[:icon] = 'red_circle.png'
@@ -205,15 +211,43 @@ class TimelineSource
   # of either one or two formatted fields, depending 
   def process_timestamp(value)
     return nil unless(value)
+
     values = value.split('/')
-    result = [ Date.parse(values.first) ]
-    result << Date.parse(values.last) if(values.size > 1)
+    #    result = [ Date.parse(values.first) ]
+    #    result << Date.parse(values.last) if(values.size > 1)
+    result = [ parse_date(values.first) ]
+    result << parse_date(values.last) if(values.size > 1)
     result
   end
-  
+
+  def parse_date(date)
+    # we accept two types of dates, a full date (like in 10-09-1976)
+    # or just the year (like in 1976).
+
+    if(date =~ /\A\s*\d{2,4}\s*\Z/)
+      Date.ordinal(date.to_i)
+    else
+      Date.parse(date)
+    end
+  end
+
   def to_iso8601(date)
     TimelineSource.to_iso8601(date)
   end
-  
+
+  def date_predicate_from_array(predicate_array, source)
+    # If we have an array, let's take the one item this source has a value for
+    if predicate_array.is_a? Array
+      predicate = ''
+      predicate_array.each do |sp|
+        predicate = sp
+        break unless source[sp].first.blank?
+      end
+    else
+      # predicate_array is actually a literal
+      predicate = predicate_array
+    end
+    predicate
+  end
   
 end
