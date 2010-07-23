@@ -186,18 +186,37 @@ class TimelineSource
       update_first_last_year(dates)
       
       # Fill the title/description fields
-      new_event[:title] = src[@options[:title_property]].first || src[N::RDFS.label].first || N::URI.new(src.uri).to_name_s
-      new_event[:description] = src[@options[:description_property]].first || new_event[:title]
+
+      if (titles = src[@options[:title_property]]).is_a? TaliaCore::SemanticCollectionWrapper and !titles.empty?
+        title = titles.first
+      else
+        title = titles unless titles.nil?
+        title = src[N::RDFS.label].first if title.nil?
+        title = N::URI.new(src.uri).to_name_s if title.nil?
+      end
+
+#      src[@options[:title_property]].first || src[N::RDFS.label].first || N::URI.new(src.uri).to_name_s
+
+      if (descriptions = src[@options[:description_property]]).is_a? TaliaCore::SemanticCollectionWrapper and !descriptions.empty?
+        description = descriptions.first
+      else
+        description = descriptions unless descriptions.nil?
+        description = title if description.nil?
+      end
+
+
+      new_event[:title] = title
+      new_event[:description] = description
       # new_event['image'] = ''
       # The link field may either be filled from a property, or with a link to the element itself (default)
       new_event[:link] = if(@options[:link_property])
         src[@options[:link_property]].first || ''
       else
-        if((uri = src.to_uri).local?)
-          '/' << uri.local_name
-        else
-          uri.to_s
-        end
+#        if((uri = src.to_uri).local?)
+#          '/' << uri.local_name
+#        else
+          src.to_uri.to_s
+#        end
       end
       # We have a duration event if we have a non-nil end date
       new_event[:duration_event] = true unless(new_event[:end])
