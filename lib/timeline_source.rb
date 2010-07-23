@@ -158,14 +158,29 @@ class TimelineSource
       start_predicate = date_predicate_from_array(original_start_predicate, src)
       end_predicate = date_predicate_from_array(original_end_predicate, src)
 
+      # we expect to have a TaliaCore::SemanticCollectionWrapper for the dates
+      # if it's not the case, we create an array with the single value
+      if src[start_predicate].is_a? TaliaCore::SemanticCollectionWrapper
+        start_dates = src[start_predicate]
+      else
+        start_dates = [src[start_predicate]]
+      end
+
+      if src[end_predicate].is_a? TaliaCore::SemanticCollectionWrapper
+        end_dates = src[end_predicate]
+      else
+        end_dates = [src[end_predicate]]
+      end
+
+
       # Ignore all sources that do not have a timestamp
-      next if((stamp = src[start_predicate].first).blank?)
+      next if((stamp = start_dates.first).blank?)
       new_event = {}
       
       # Fill the start and end date fields
       dates = process_timestamp(stamp)
       # Overwrite the second date if we have a predefined "end" field
-      dates[1] = process_timestamp(src[end_predicate].first).first if(end_predicate) and !src[end_predicate].empty?
+      dates[1] = process_timestamp(end_dates.first).first unless end_dates.empty?
       new_event[:start], new_event[:end] = dates.collect { |d| to_iso8601(d) }
 
       update_first_last_year(dates)
