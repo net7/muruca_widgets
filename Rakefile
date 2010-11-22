@@ -33,6 +33,7 @@ begin
     s.authors = ["Daniel Hahn"]
     s.files = FileList["{lib}/**/*", "{generators}/**/*"]
     s.extra_rdoc_files = ["README.rdoc", "LICENSE"]
+    s.add_dependency('json', '>= 1.1.0')
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
