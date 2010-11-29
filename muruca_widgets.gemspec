@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Daniel Hahn"]
-  s.date = %q{2010-11-22}
+  s.date = %q{2010-11-29}
   s.description = %q{Some additional interface elements to be used on Muruca sites.}
   s.email = %q{ghub@limitedcreativity.org}
   s.extra_rdoc_files = [
